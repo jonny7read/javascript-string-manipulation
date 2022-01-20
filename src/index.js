@@ -1,11 +1,50 @@
 // Create a tagged template lf`...` that formats text using LF line endings.
-var lf = () => {};
+var lf = (lines, values) => {
+  var msg = '';
+  for (let index = 0; index < lines.length; index++) {
+    const line = transformLineEnding(lines[index] ?? '', LineEndings.LF);
+    let value = values[index] ?? '';
+
+    if (value != this.disableConverter) {
+      value = transformLineEnding(value, LineEndings.LF);
+    }
+
+    msg += line+value;
+  }
+  return msg;
+};
 
 // Create a tagged template cr`...` that formats text using CR line endings.
-var cr = () => {};
+var cr = (lines, values) => {
+  var msg = '';
+  for (let index = 0; index < lines.length; index++) {
+    const line = transformLineEnding(lines[index] ?? '', LineEndings.CR);
+    let value = values[index] ?? '';
+
+    if (value != this.disableConverter) {
+      value = transformLineEnding(value, LineEndings.CR);
+    }
+
+    msg += line+value;
+  }
+  return msg;
+};
 
 // Create a tagged template crlf`...` that formats text using CRLF line endings.
-var crlf = () => {};
+var crlf = (lines, values) => {
+  var msg = '';
+  for (let index = 0; index < lines.length; index++) {
+    const line = transformLineEnding(lines[index] ?? '', LineEndings.CRLF);
+    let value = values[index] ?? '';
+
+    if (value != this.disableConverter) {
+      value = transformLineEnding(value, LineEndings.CRLF);
+    }
+
+    msg += line+value;
+  }
+  return msg;
+};
 
 const transformLineEnding = (string, lineEnding) => {
   string = (string != null ? string.toString() : "");
@@ -50,5 +89,6 @@ module.exports = {
   cr,
   crlf,
   LineEndings,
-  transformLineEnding
+  transformLineEnding,
+  disableConverter: Symbol('crlf-converter-disable')
 };
